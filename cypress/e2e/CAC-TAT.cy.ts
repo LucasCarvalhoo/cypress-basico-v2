@@ -49,4 +49,27 @@ describe('Central de Atendimento ao Cliente TAT', function() {
       }
     })
   })
+
+  it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
+
+    cy.get('#firstName').type('Lucas')
+    cy.get('#lastName').type('Carvalho')
+    cy.get('#email').type('lucas@gmail.com')
+    cy.get('#phone-checkbox').click()
+    cy.get('#open-text-area').type('texto')
+    cy.get('button[type="submit"]').click()
+    
+    cy.get('.error').should('be.visible')
+  })
+
+  it('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
+    cy.get('#firstName').type('Lucas').should('have.value', 'Lucas')
+    cy.get('#firstName').clear().should('have.value', '')
+
+    cy.get('#lastName').type('Carvalho').should('have.value', 'Carvalho')
+    cy.get('#lastName').clear().should('have.value', '')
+
+    cy.get('#email').type('lucas@gmail.com').should('have.value', 'lucas@gmail.com')
+    cy.get('#email').clear().should('have.value', '')
+  })
 })
