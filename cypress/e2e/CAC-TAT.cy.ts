@@ -72,4 +72,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.get('#email').type('lucas@gmail.com').should('have.value', 'lucas@gmail.com')
     cy.get('#email').clear().should('have.value', '')
   })
+
+  it('envia o formuário com sucesso usando um comando customizado', function(){
+    cy.fillMandatoryFieldsAndSubmit()
+
+    cy.get('.success').should('be.visible')
+  })
 })
