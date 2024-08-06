@@ -78,4 +78,40 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     cy.get('.success').should('be.visible')
   })
+
+  it('seleciona um produto (YouTube) por seu texto', function(){
+    cy.get('#product').select('YouTube').should('have.value', 'youtube');
+  })
+
+  it('seleciona um produto (Mentoria) por seu valor (value)', function(){
+    cy.get('#product').select('Mentoria').should('have.value', 'mentoria')
+  })
+
+  it('seleciona um produto (Blog) por seu índice', function(){
+    cy.get('#product').select('Blog').should('have.value', 'blog')
+  })
+
+  it('marca o tipo de atendimento "Feedback"', function(){
+    cy.get('input[type="radio"][value="feedback"]').check()
+  }) 
+
+  it('marca cada tipo de atendimento', function(){
+    cy.get('input[type="radio"][value="ajuda"]').check().should('be.checked', 'ajuda')
+    cy.get('input[type="radio"][value="elogio"]').check().should('be.checked', 'elogio')
+    cy.get('input[type="radio"][value="feedback"]').check().should('be.checked', 'feedback')
+  }) 
+
+  it('marca o meio de contato preferencial', function(){
+    cy.get('input[type="checkbox"][value="email"]').check()
+  }) 
+
+  it('marca ambos checkboxes, depois desmarca o último', function(){
+    cy.get('input[type="checkbox"][value="email"]').check()
+    cy.get('input[type="checkbox"][value="phone"]').check()
+    cy.get('input[type="checkbox"][value="phone"]').uncheck().should('not.be.checked')
+  }) 
+
+  it.only('seleciona um arquivo da pasta fixtures', function(){
+    cy.get('input[type="file"]').selectFile('cypress/fixtures/example.json')
+  })
 })
