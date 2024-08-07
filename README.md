@@ -27,3 +27,7 @@ Vá para a seção [estrutura do curso](./lessons/_course-structure_.md).
 ___
 
 Este é mais um curso da [**Escola Talking About Testing**](https://udemy.com/user/walmyr).
+
+## Como rodar os testes?
+
+- Para rodar os testes `npx cypress run` e para rodar os testes usando a interface grafica `npx cypress open`
