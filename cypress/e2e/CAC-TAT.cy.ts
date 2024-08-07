@@ -115,19 +115,22 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.get('input[type="file"]')
     .should('not.have.value')
     .selectFile('cypress/fixtures/example.json')
-    .should(function($input){
-      expect($input[0].files[0].name).to.equal('example.json')
-    })
+    .should(($input) => {
+      const inputElement = $input[0] as HTMLInputElement;
+      expect(inputElement.files[0].name).to.equal('example.json');
+    });
   })
 
-  it('seleciona um arquivo simulando um drag-and-drop', function(){
+  it('seleciona um arquivo simulando um drag-and-drop', function() {
     cy.get('input[type="file"]')
-    .should('not.have.value')
-    .selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
-    .should(function($input){
-      expect($input[0].files[0].name).to.equal('example.json')
-    })
-  })
+      .should('not.have.value')
+      .selectFile('cypress/fixtures/example.json', { action: 'drag-drop' })
+      .should(($input) => {
+        const inputElement = $input[0] as HTMLInputElement;
+        expect(inputElement.files[0].name).to.equal('example.json');
+      });
+  });
+  
 
   it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function(){
     cy.fixture('example.json').as('sampleFile')
