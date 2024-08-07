@@ -49,7 +49,7 @@ obs: caso queira usar typescript ao inves de javascript veja nas configurações
 }
 ```
 > - Atualize o arquivo `cypress.config.ts`:
-```json
+```
 const { defineConfig } = require("cypress");
 
 module.exports = defineConfig({
