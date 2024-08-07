@@ -1,8 +1,11 @@
-name: End-to-end tests
-on: push
+name: Run Cypress Tests
+
+on: [push, pull_request]
+
 jobs:
   cypress-run:
     runs-on: ubuntu-latest
+
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
@@ -11,6 +14,11 @@ jobs:
         uses: actions/setup-node@v2
         with:
           node-version: '16.20.2'
+
+      - name: Debug network connectivity
+        run: |
+          ping -c 4 nexus.trt7.jus.br
+          nslookup nexus.trt7.jus.br
 
       - name: Clear npm cache
         run: npm cache clean --force
@@ -24,3 +32,4 @@ jobs:
           record: false
           publish-summary: true
           component: false
+
