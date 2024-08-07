@@ -120,7 +120,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
   })
 
-  it.only('seleciona um arquivo simulando um drag-and-drop', function(){
+  it('seleciona um arquivo simulando um drag-and-drop', function(){
     cy.get('input[type="file"]')
     .should('not.have.value')
     .selectFile('cypress/fixtures/example.json', {action: 'drag-drop'})
@@ -129,9 +129,26 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     })
   })
 
-  it.only('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function(){
+  it('seleciona um arquivo utilizando uma fixture para a qual foi dada um alias', function(){
     cy.fixture('example.json').as('sampleFile')
     cy.get('input[type="file"]')
       .selectFile('@sampleFile')
+  })
+
+  it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function(){
+    // Verifica se o link dentro do elemento com id 'privacy' possui o atributo target='_blank'
+    cy.get('#privacy a').should('have.attr', 'target', '_blank')
+  })
+
+  it('verifica que a política de privacidade abre em outra aba sem a necessidade de um clique', function(){
+    cy.get('#privacy a').invoke('removeAttr', 'target').click() // remove o atributo target
+    cy.contains('Talking About Testing').should('be.visible') // verificar se algum texto está visivel na pagina
+  })
+
+  it.only('testa a página da política de privacidade de forma independente', function(){
+    cy.get('#privacy a').invoke('removeAttr', 'target').click() // remove o atributo target
+
+    // testes da pagina de politica de privacidade
+    cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT - Política de privacidade')
   })
 })
