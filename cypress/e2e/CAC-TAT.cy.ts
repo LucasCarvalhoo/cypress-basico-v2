@@ -145,7 +145,7 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.contains('Talking About Testing').should('be.visible') // verificar se algum texto está visivel na pagina
   })
 
-  it.only('testa a página da política de privacidade de forma independente', function(){
+  it('testa a página da política de privacidade de forma independente', function(){
     cy.get('#privacy a').invoke('removeAttr', 'target').click() // remove o atributo target
 
     // testes da pagina de politica de privacidade
