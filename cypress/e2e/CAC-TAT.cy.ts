@@ -181,4 +181,65 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.tick(3000)
     cy.get('.error').should('not.be.visible')
   })
+
+  Cypress._.times(5, () => {
+    it('preenche os campos obrigatoris e envia o formulario', function(){
+      const longText = 'teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste'
+
+    cy.clock()
+
+    cy.get('#firstName').type('Lucas')
+    cy.get('#lastName').type('Carvalho')
+    cy.get('#email').type('lucas@gmail.com')
+    cy.get('#open-text-area').type(longText, {delay: 0})
+    cy.contains('button', 'Enviar').click()
+
+    cy.get('.success').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.success').should('not.be.visible')
+    })
+  })
+
+  it('simulates sending a CTRL+V command to paste a long text on a textarea field', function(){
+    const longText = Cypress._.repeat('0123456789', 20) // ctrl+c e ctrl+v 20 vezes
+
+    // aqui ele simula a digitação do texto
+    //cy.get('#open-text-area').type(longText, {delay: 0}).should('have.value', longText) 
+
+    // o comando .invoke inseri o texto no campo de uma vez sem a necessidade de um delay
+    cy.get('textarea').invoke('val', longText).should('have.value', longText)
+  })
+
+  it('exibe e esconde as mensagens de sucesso e erro usando o .invoke', () => {
+    cy.get('.success')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Mensagem enviada com sucesso.')
+      .invoke('hide')
+      .should('not.be.visible')
+    cy.get('.error')
+      .should('not.be.visible')
+      .invoke('show')
+      .should('be.visible')
+      .and('contain', 'Valide os campos obrigatórios!')
+      .invoke('hide')
+      .should('not.be.visible')
+  })
+
+  it('preenche a area de texto usando o comando invoke', function(){
+    const longText = '123467'
+
+    cy.get('#open-text-area').invoke('val', longText).should('have.value', longText)
+  })
+
+  it('faz uma requisição HTTP', function(){
+    cy.request('https://cac-tat.s3.eu-central-1.amazonaws.com/index.html')
+  })
+
+  it.only('encontre o gato', function(){
+    cy.get('#cat').invoke('show').should('be.visible')
+  })
 })
