@@ -2,6 +2,7 @@
 
 // describe define o suite de teste, e o bloco it, define um caso de teste.
 describe('Central de Atendimento ao Cliente TAT', function() {
+  const THREE_SECONDS_IN_MS = 3000
   beforeEach(() => {
     cy.visit('../../src/index.html')
   })
@@ -14,6 +15,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {
   it('preenche os campos obrigatoris e envia o formulario', function(){
     const longText = 'teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste'
 
+    cy.clock()
+
     cy.get('#firstName').type('Lucas')
     cy.get('#lastName').type('Carvalho')
     cy.get('#email').type('lucas@gmail.com')
@@ -21,10 +24,16 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.contains('button', 'Enviar').click()
 
     cy.get('.success').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.success').should('not.be.visible')
   })
 
   it('exibe mensagem de erro ao submeter o formulário com um email com formatação inválida', function(){
     const longText = 'teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste, teste'
+
+    cy.clock()
 
     cy.get('#firstName').type('Lucas')
     cy.get('#lastName').type('Carvalho')
@@ -33,6 +42,10 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.contains('button', 'Enviar').click()
 
     cy.get('.error').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+
+    cy.get('.error').should('not.be.visible')
   })
 
   it('validar se o que estar sendo digitado no campo telefone é numerico', function(){
@@ -52,6 +65,8 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
   it('exibe mensagem de erro quando o telefone se torna obrigatório mas não é preenchido antes do envio do formulário', function(){
 
+    cy.clock()
+
     cy.get('#firstName').type('Lucas')
     cy.get('#lastName').type('Carvalho')
     cy.get('#email').type('lucas@gmail.com')
@@ -60,6 +75,9 @@ describe('Central de Atendimento ao Cliente TAT', function() {
     cy.contains('button', 'Enviar').click()
     
     cy.get('.error').should('be.visible')
+
+    cy.tick(THREE_SECONDS_IN_MS)
+    cy.get('.error').should('not.be.visible')
   })
 
   it('preenche e limpa os campos nome, sobrenome, email e telefone', function(){
@@ -153,5 +171,14 @@ describe('Central de Atendimento ao Cliente TAT', function() {
 
     // testes da pagina de politica de privacidade
     cy.title().should('be.equal', 'Central de Atendimento ao Cliente TAT - Política de privacidade')
+  })
+
+  it('exibe mensagem por 3 segundos', function(){
+    cy.clock()
+    cy.get('.button').click()
+    cy.get('.error').should('be.visible')
+
+    cy.tick(3000)
+    cy.get('.error').should('not.be.visible')
   })
 })
