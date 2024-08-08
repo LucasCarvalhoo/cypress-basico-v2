@@ -36,7 +36,7 @@ obs: caso queira usar typescript ao inves de javascript veja nas configurações
 
 ### - Caso queira usar typescript ao inves de javascript
 
-> - instale o typescript no projeto `npx install typescript --save-dev`
+> - instale o typescript no projeto `npm install typescript --save-dev`
 > - crie um arquivo chamado `tsconfig.json` e dentro do arquivo coloque as configurações do typescript conforme abaixo.
 ```json
 {
