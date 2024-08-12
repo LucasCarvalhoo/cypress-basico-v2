@@ -20,7 +20,7 @@ https://github.com/coreybutler/nvm-windows/releases
 
 ### - Crie um arquivo package.json para configurar o projeto e verificar dependências
 
-`npx init -y` 
+`npm init -y` 
 
 ### - Instale o Cypress no seu projeto de forma local
 
